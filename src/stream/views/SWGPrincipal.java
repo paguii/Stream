@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
-import uk.co.caprica.vlcj.player.media.Media;
 import stream.controllers.SWGbtnStart;
 import stream.controllers.SWGbtnStop;
 
@@ -38,6 +37,7 @@ public class SWGPrincipal {
 		frmPlaystreamRtp.setResizable(false);
 		frmPlaystreamRtp.setBounds(100, 100, 698, 531);
 		frmPlaystreamRtp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPlaystreamRtp.setVisible(true);
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.DARK_GRAY);
@@ -71,7 +71,6 @@ public class SWGPrincipal {
 		btnStop.setBounds(494, 468, 89, 23);
 		desktopPane.add(btnStop);
 		
-		//mediaPlayer.playMedia();
-
+		mediaPlayer.playMedia("rtp://@192.168.64.74:5004");
 	}
 }
