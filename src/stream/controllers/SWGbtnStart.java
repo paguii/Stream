@@ -30,7 +30,7 @@ public class SWGbtnStart implements ActionListener {
 		System.out.println(LibVlc.INSTANCE.libvlc_get_version());
 		NativeDiscovery nd = new NativeDiscovery();
 		if (!nd.discover()) {
-			System.out.println("VLC not found");
+			System.out.println("VLC not found!");
 			System.exit(-1);
 		}
 
