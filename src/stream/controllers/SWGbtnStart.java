@@ -61,7 +61,7 @@ public class SWGbtnStart implements ActionListener {
 		mediaPlayer.playMedia(serverPublic);
 	}
 
-	private static String formatRtpStream(String serverAddress, int serverPort) {
+	private String formatRtpStream(String serverAddress, int serverPort) {
 		StringBuilder sb = new StringBuilder(60);
 		sb.append(":sout=#rtp{dst=");
 		sb.append(serverAddress);
