@@ -5,12 +5,17 @@ import javax.swing.JDesktopPane;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.media.Media;
 import stream.controllers.SWGbtnStart;
 import stream.controllers.SWGbtnStop;
 
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.Canvas;
 
 public class SWGPrincipal {
 
@@ -38,6 +43,18 @@ public class SWGPrincipal {
 		desktopPane.setBackground(Color.DARK_GRAY);
 		frmPlaystreamRtp.getContentPane().add(desktopPane, BorderLayout.CENTER);
 		
+		MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+		EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+		
+		Canvas canvas = new Canvas();
+		canvas.setBackground(Color.black);
+		canvas.setBounds(0, 60, 692, 395);
+		
+		CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+		mediaPlayer.setVideoSurface(videoSurface);
+		
+		desktopPane.add(canvas);
+		
 		JLabel lblTitulo = new JLabel("PlayStream");
 		lblTitulo.setForeground(Color.LIGHT_GRAY);
 		lblTitulo.setFont(new Font("Consolas", Font.PLAIN, 36));
@@ -46,12 +63,15 @@ public class SWGPrincipal {
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new SWGbtnStart()); // Controller START
-		btnStart.setBounds(582, 456, 89, 23);
+		btnStart.setBounds(593, 468, 89, 23);
 		desktopPane.add(btnStart);
 		
 		JButton btnStop = new JButton("Stop");
 		btnStop.addActionListener(new SWGbtnStop()); // Controller STOP
-		btnStop.setBounds(474, 456, 89, 23);
+		btnStop.setBounds(494, 468, 89, 23);
 		desktopPane.add(btnStop);
+		
+		//mediaPlayer.playMedia();
+
 	}
 }
