@@ -75,11 +75,16 @@ public class SWGPrincipal {
 
 				String serverPort = JOptionPane.showInputDialog("Digite a porta do servidor de Stream.");
 				System.out.print(serverPort);
-				String rtpCode = "rtp://@" + serverIP + ":" + serverPort;
+				
+				if((serverIP.length() < 8 || serverIP.length() > 16) || (serverPort.length() > 5 || serverPort.length() < 1)){
+					System.err.println("\n\nParametros Zuados");
+				}else{
+					String rtpCode = "rtp://@" + serverIP + ":" + serverPort;
 
-				System.out.println("\nCapturing from '" + rtpCode + "'");
+					System.out.println("\nCapturing from '" + rtpCode + "'");
 
-				// mediaPlayer.playMedia(rtpCode);
+					mediaPlayer.playMedia(rtpCode);
+				}
 			}
 		});
 
