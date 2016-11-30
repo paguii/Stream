@@ -3,32 +3,31 @@ package stream.views;
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.awt.Canvas;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import javax.swing.JLabel;
+
+import stream.controllers.SWGPrincipalController;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import java.awt.Canvas;
 
 public class SWGPrincipal {
 
-	public JFrame frmPlaystreamRtp;
-
-	/**
-	 * Create the application.
-	 * 
-	 * 
-	 * /** Initialize the contents of the frame.
-	 */
+	private JFrame frmPlaystreamRtp;
+	private JDesktopPane desktopPane;
+	private JLabel lblTitulo;
+	private JButton btnStart; //Play
+	private JButton btnStop; //Stop
+	private Canvas canvas; //Onde vai ser executado a stream
+	
+	private SWGPrincipalController controller;
+	
 	public SWGPrincipal() {
+		this.controller = new SWGPrincipalController();
+		
 		frmPlaystreamRtp = new JFrame();
 		frmPlaystreamRtp.setTitle("PlayStream - RTP Player");
 		frmPlaystreamRtp.setName("framePrincipal");
@@ -37,62 +36,72 @@ public class SWGPrincipal {
 		frmPlaystreamRtp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlaystreamRtp.setVisible(true);
 
-		JDesktopPane desktopPane = new JDesktopPane();
+		desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.DARK_GRAY);
 		frmPlaystreamRtp.getContentPane().add(desktopPane, BorderLayout.CENTER);
-
-		MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-		EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-
-		Canvas canvas = new Canvas();
+		
+		canvas = new Canvas();
 		canvas.setBackground(Color.black);
 		canvas.setBounds(0, 60, 692, 395);
+		controller.addPlayer(canvas);
 
-		CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
-		mediaPlayer.setVideoSurface(videoSurface);
-
-		desktopPane.add(canvas);
-
-		JLabel lblTitulo = new JLabel("PlayStream");
+		lblTitulo = new JLabel("PlayStream");
 		lblTitulo.setForeground(Color.LIGHT_GRAY);
 		lblTitulo.setFont(new Font("Consolas", Font.PLAIN, 36));
 		lblTitulo.setBounds(10, 11, 211, 59);
-		desktopPane.add(lblTitulo);
 
-		JButton btnStart = new JButton("Start");
+		btnStart = new JButton("Start");
 		btnStart.setBounds(593, 468, 89, 23);
-		desktopPane.add(btnStart);
+		btnStart.addActionListener(controller);
 
-		JButton btnStop = new JButton("Stop");
+		btnStop = new JButton("Stop");
 		btnStop.setBounds(494, 468, 89, 23);
+		btnStop.addActionListener(controller);
+		
+		desktopPane.add(lblTitulo);
 		desktopPane.add(btnStop);
+		desktopPane.add(btnStart);
+		desktopPane.add(canvas);
+	}
+	
+	public JFrame getFrmPlaystreamRtp() {
+		return frmPlaystreamRtp;
+	}
 
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	public void setFrmPlaystreamRtp(JFrame frmPlaystreamRtp) {
+		this.frmPlaystreamRtp = frmPlaystreamRtp;
+	}
 
-				String serverIP = JOptionPane.showInputDialog("Digite o IP do servidor de Stream.");
-				System.out.println(serverIP);
+	public JDesktopPane getDesktopPane() {
+		return desktopPane;
+	}
 
-				String serverPort = JOptionPane.showInputDialog("Digite a porta do servidor de Stream.");
-				System.out.print(serverPort);
-				
-				if((serverIP.length() < 8 || serverIP.length() > 16) || (serverPort.length() > 5 || serverPort.length() < 1)){
-					System.err.println("\n\nParametros Zuados");
-				}else{
-					String rtpCode = "rtp://@" + serverIP + ":" + serverPort;
+	public void setDesktopPane(JDesktopPane desktopPane) {
+		this.desktopPane = desktopPane;
+	}
 
-					System.out.println("\nCapturing from '" + rtpCode + "'");
+	public JLabel getLblTitulo() {
+		return lblTitulo;
+	}
 
-					mediaPlayer.playMedia(rtpCode);
-				}
-			}
-		});
+	public void setLblTitulo(JLabel lblTitulo) {
+		this.lblTitulo = lblTitulo;
+	}
 
-		btnStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mediaPlayer.stop();
-			}
-		});
+	public JButton getBtnStart() {
+		return btnStart;
+	}
+
+	public void setBtnStart(JButton btnStart) {
+		this.btnStart = btnStart;
+	}
+
+	public JButton getBtnStop() {
+		return btnStop;
+	}
+
+	public void setBtnStop(JButton btnStop) {
+		this.btnStop = btnStop;
 	}
 
 }

@@ -31,7 +31,7 @@ public class Stream {
 			public void run() {
 				try {
 					SWGPrincipal window = new SWGPrincipal();
-					window.frmPlaystreamRtp.setVisible(true);
+					window.getFrmPlaystreamRtp().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
