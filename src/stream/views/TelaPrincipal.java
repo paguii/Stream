@@ -14,20 +14,19 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
-public class SWGPrincipal {
+public class TelaPrincipal {
 
 	private JFrame frmPlaystreamRtp;
 	private JDesktopPane desktopPane;
 	private JLabel lblTitulo;
-	private JButton btnStart; //Play
-	private JButton btnStop; //Stop
-	private Canvas canvas; //Onde vai ser executado a stream
-	
+	private JButton btnStart; // Play
+	private JButton btnStop; // Stop
+	private Canvas canvas; // Onde vai ser executado a stream
+
 	private SWGPrincipalController controller;
-	
-	public SWGPrincipal() {
-		this.controller = new SWGPrincipalController();
-		
+
+	// Inicializador da classe
+	public TelaPrincipal(SWGPrincipalController controller) {
 		frmPlaystreamRtp = new JFrame();
 		frmPlaystreamRtp.setTitle("PlayStream - RTP Player");
 		frmPlaystreamRtp.setName("framePrincipal");
@@ -39,7 +38,7 @@ public class SWGPrincipal {
 		desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.DARK_GRAY);
 		frmPlaystreamRtp.getContentPane().add(desktopPane, BorderLayout.CENTER);
-		
+
 		canvas = new Canvas();
 		canvas.setBackground(Color.black);
 		canvas.setBounds(0, 60, 692, 395);
@@ -48,7 +47,7 @@ public class SWGPrincipal {
 		lblTitulo = new JLabel("PlayStream");
 		lblTitulo.setForeground(Color.LIGHT_GRAY);
 		lblTitulo.setFont(new Font("Consolas", Font.PLAIN, 36));
-		lblTitulo.setBounds(10, 11, 211, 59);
+		lblTitulo.setBounds(10, 11, 211, 43);
 
 		btnStart = new JButton("Start");
 		btnStart.setBounds(593, 468, 89, 23);
@@ -57,13 +56,13 @@ public class SWGPrincipal {
 		btnStop = new JButton("Stop");
 		btnStop.setBounds(494, 468, 89, 23);
 		btnStop.addActionListener(controller);
-		
+
 		desktopPane.add(lblTitulo);
 		desktopPane.add(btnStop);
 		desktopPane.add(btnStart);
 		desktopPane.add(canvas);
 	}
-	
+
 	public JFrame getFrmPlaystreamRtp() {
 		return frmPlaystreamRtp;
 	}
